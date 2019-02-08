@@ -8,9 +8,10 @@ RUN apt-get -y update \
     && adduser bap sudo \
     && sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 USER bap
+
 WORKDIR /home/bap
+
 ENV PATH="/home/bap/.opam/4.05.0/bin/:${PATH}"
-COPY . /home/bap/cwe_checker/
 
 RUN sudo apt-get -y update \
     && sudo install_clean \
@@ -29,9 +30,10 @@ RUN sudo apt-get -y update \
         unzip \
         wget \
         zlib1g-dev \
+    # install opam
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
-# install Bap
+    # install bap
     && opam init --auto-setup --comp=4.05.0 --disable-sandboxing --yes \
     && opam update \
     && opam install depext --yes \
