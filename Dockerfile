@@ -39,7 +39,7 @@ RUN sudo apt-get -y update \
     && opam update \
     && opam install depext --yes \
     && OPAMJOBS=1 opam depext --install bap --yes \
-    && OPAMJOBS=1 opam install yojson alcotest dune core --yes
+    && OPAMJOBS=1 opam install yojson alcotest dune core ppx_deriving_yojson --yes
 
 WORKDIR /home/bap/cwe_checker/src
 
