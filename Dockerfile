@@ -35,10 +35,9 @@ RUN sudo apt-get -y update \
     && yes /usr/local/bin | sudo sh install.sh \
     # install bap
     && opam init --auto-setup --comp=4.05.0 --disable-sandboxing --yes \
-    && opam repo add bap git://github.com/BinaryAnalysisPlatform/opam-repository#testing \
     && opam update \
     && opam install depext --yes \
-    && OPAMJOBS=1 opam depext --install bap --yes \
+    && OPAMJOBS=1 opam depext --install bap.1.6.0 --yes \
     && OPAMJOBS=1 opam install yojson alcotest dune core ppx_deriving_yojson --yes
 
 WORKDIR /home/bap/cwe_checker/src
