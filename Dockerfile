@@ -34,7 +34,7 @@ RUN sudo apt-get -y update \
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
     # install bap
-    && opam init --auto-setup --comp=4.05.0 --disable-sandboxing --yes \
+    && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
     && opam update \
     && opam install depext --yes \
     && OPAMJOBS=1 opam depext --install bap.1.6.0 --yes \
