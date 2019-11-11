@@ -33,7 +33,7 @@ RUN sudo apt-get -y update \
     # install opam
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
-    # install bap
+    # install ocaml and bap
     && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
     && opam update \
     && opam install depext --yes \
