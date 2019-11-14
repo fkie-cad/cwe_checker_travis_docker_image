@@ -11,7 +11,7 @@ USER bap
 
 WORKDIR /home/bap
 
-ENV PATH="/home/bap/.opam/4.05.0/bin/:${PATH}"
+ENV PATH="/home/bap/.opam/4.07.1/bin/:${PATH}"
 
 RUN sudo apt-get -y update \
     && sudo install_clean \
