@@ -1,5 +1,5 @@
 # based on https://github.com/BinaryAnalysisPlatform/bap/blob/master/docker/Dockerfile
-FROM phusion/baseimage:0.11
+FROM phusion/baseimage:latest
 
 RUN apt-get -y update \
     && install_clean sudo \
