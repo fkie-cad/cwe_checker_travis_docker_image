@@ -30,6 +30,7 @@ RUN sudo apt-get -y update \
         unzip \
         wget \
         zlib1g-dev \
+        libncurses5-dev \
     # install opam
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
@@ -37,7 +38,7 @@ RUN sudo apt-get -y update \
     && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
     && opam update \
     && opam install depext --yes \
-    && OPAMJOBS=1 opam depext --install bap.1.6.0 --yes \
+    && OPAMJOBS=1 opam depext --install bap --yes \
     && OPAMJOBS=1 opam install yojson alcotest dune core ppx_deriving_yojson --yes
 
 WORKDIR /home/bap/cwe_checker/src
