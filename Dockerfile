@@ -36,10 +36,12 @@ RUN sudo apt-get -y update \
     && yes /usr/local/bin | sudo sh install.sh \
     # install ocaml and bap
     && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
+    # add BAP master branch to opam sources
+    && opam repo add  bap-testing git+https://github.com/BinaryAnalysisPlatform/opam-repository#testing \
     && opam update \
     && opam install depext --yes \
     && OPAMJOBS=1 opam depext --install bap --yes \
-    && OPAMJOBS=1 opam install yojson alcotest dune core ppx_deriving_yojson --yes
+    && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes
 
 WORKDIR /home/bap/cwe_checker/src
 
