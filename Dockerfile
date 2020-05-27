@@ -30,9 +30,15 @@ RUN sudo apt-get -y update \
         unzip \
         wget \
         zlib1g-dev \
-        libncurses5-dev \
-    # install opam
-    && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
+        libncurses5-dev
+
+# install Rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y
+
+ENV PATH="/home/bap/.cargo/bin/:${PATH}"
+
+# install opam and bap
+RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
     # install ocaml and bap
     && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
