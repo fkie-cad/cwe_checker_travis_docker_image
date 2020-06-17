@@ -1,5 +1,5 @@
 # based on https://github.com/BinaryAnalysisPlatform/bap/blob/master/docker/Dockerfile
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:18.04-1.0.0
 
 RUN apt-get -y update \
     && install_clean sudo \
@@ -23,7 +23,7 @@ RUN sudo apt-get -y update \
         libgmp-dev \
         libx11-dev \
         libzip-dev \
-        llvm-8-dev \
+        llvm-9-dev \
         m4 \
         pkg-config \
         software-properties-common \
@@ -31,10 +31,9 @@ RUN sudo apt-get -y update \
         wget \
         zlib1g-dev \
         libncurses5-dev \
-        python2.7
-
-# install Rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y
+        python2.7 \
+	# install Rust
+	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y
 
 ENV PATH="/home/bap/.cargo/bin/:${PATH}"
 
