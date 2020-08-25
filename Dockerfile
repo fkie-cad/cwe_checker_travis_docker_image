@@ -32,13 +32,11 @@ RUN sudo apt-get -y update \
         zlib1g-dev \
         libncurses5-dev \
         python2.7 \
+        radare2 \
 	# install Rust
-	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y
-
-ENV PATH="/home/bap/.cargo/bin/:${PATH}"
-
-# install opam and bap
-RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
+	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y \
+    # install opam and bap
+    && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
     # install ocaml and bap
     && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
@@ -47,7 +45,12 @@ RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && opam update \
     && opam install depext --yes \
     && OPAMJOBS=1 opam depext --install bap --yes \
-    && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes
+    && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes \
+    && opam clean -acrs \
+    # delete 6 GB (!!) of unnecessary data
+    && rm -rf /home/bap/.opam/4.07.1/.opam-switch/sources/*
+
+ENV PATH="/home/bap/.cargo/bin/:${PATH}"
 
 WORKDIR /home/bap/cwe_checker/src
 
