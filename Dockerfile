@@ -12,6 +12,7 @@ USER bap
 WORKDIR /home/bap
 
 ENV PATH="/home/bap/.opam/4.07.1/bin/:${PATH}"
+ENV PATH="/home/bap/.cargo/bin/:${PATH}"
 
 RUN sudo apt-get -y update \
     && sudo install_clean \
@@ -34,7 +35,8 @@ RUN sudo apt-get -y update \
         python2.7 \
         radare2 \
 	# install Rust
-	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile default -y \
+	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y \
+    && rustup component add rustfmt clippy \
     # install opam and bap
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
@@ -48,9 +50,8 @@ RUN sudo apt-get -y update \
     && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes \
     && opam clean -acrs \
     # delete 6 GB (!!) of unnecessary data
-    && rm -rf /home/bap/.opam/4.07.1/.opam-switch/sources/*
-
-ENV PATH="/home/bap/.cargo/bin/:${PATH}"
+    && rm -rf /home/bap/.opam/4.07.1/.opam-switch/sources/* \
+    && rm -rf /home/bap/.opam/repo/*
 
 WORKDIR /home/bap/cwe_checker/src
 
