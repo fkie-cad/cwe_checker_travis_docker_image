@@ -3,16 +3,16 @@ FROM phusion/baseimage:18.04-1.0.0
 
 RUN apt-get -y update \
     && install_clean sudo \
-    && useradd -m bap \
-    && echo "bap:bap" | chpasswd \
-    && adduser bap sudo \
+    && useradd -m cwe \
+    && echo "cwe:cwe" | chpasswd \
+    && adduser cwe sudo \
     && sed -i.bkp -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
-USER bap
+USER cwe
 
-WORKDIR /home/bap
+WORKDIR /home/cwe
 
-ENV PATH="/home/bap/.opam/4.07.1/bin/:${PATH}"
-ENV PATH="/home/bap/.cargo/bin/:${PATH}"
+ENV PATH="/home/cwe/.opam/4.07.1/bin/:${PATH}"
+ENV PATH="/home/cwe/.cargo/bin/:${PATH}"
 
 RUN sudo apt-get -y update \
     && sudo install_clean \
@@ -36,7 +36,6 @@ RUN sudo apt-get -y update \
         radare2 \
 	# install Rust
 	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y \
-    && rustup component add rustfmt clippy \
     # install opam and bap
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
@@ -50,9 +49,7 @@ RUN sudo apt-get -y update \
     && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes \
     && opam clean -acrs \
     # delete 6 GB (!!) of unnecessary data
-    && rm -rf /home/bap/.opam/4.07.1/.opam-switch/sources/* \
-    && rm -rf /home/bap/.opam/repo/*
-
-WORKDIR /home/bap/cwe_checker/src
+    && rm -rf /home/cwe/.opam/4.07.1/.opam-switch/sources/* \
+    && rm -rf /home/cwe/.opam/repo/*
 
 ENTRYPOINT ["opam", "config", "exec", "--"]
