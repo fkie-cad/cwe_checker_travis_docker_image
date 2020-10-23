@@ -22,6 +22,7 @@ RUN sudo apt-get -y update \
         openjdk-11-jdk \
 	# install Rust
 	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y \
+    && rustup component add rustfmt clippy \
     # install Ghidra
     && curl -fSL https://www.ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip -o ghidra.zip \
     && unzip -q ghidra.zip \

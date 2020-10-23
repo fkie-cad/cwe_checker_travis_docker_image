@@ -36,6 +36,7 @@ RUN sudo apt-get -y update \
         radare2 \
 	# install Rust
 	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y \
+    && rustup component add rustfmt clippy \
     # install opam and bap
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
