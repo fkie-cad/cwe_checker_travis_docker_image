@@ -11,7 +11,7 @@ USER cwe
 
 WORKDIR /home/cwe
 
-ENV PATH="/home/cwe/.opam/4.07.1/bin/:${PATH}"
+ENV PATH="/home/cwe/.opam/4.08.0/bin/:${PATH}"
 ENV PATH="/home/cwe/.cargo/bin/:${PATH}"
 
 RUN sudo apt-get -y update \
@@ -37,16 +37,14 @@ RUN sudo apt-get -y update \
 	# install Rust
 	&& curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal -y \
     && rustup component add rustfmt clippy \
-    # install opam and bap
+    # install opam
     && wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh \
     && yes /usr/local/bin | sudo sh install.sh \
     # install ocaml and bap
-    && opam init --auto-setup --comp=4.07.1 --disable-sandboxing --yes \
-    # add BAP master branch to opam sources
-    && opam repo add  bap-testing git+https://github.com/BinaryAnalysisPlatform/opam-repository#testing \
+    && opam init --auto-setup --comp=4.08.0 --disable-sandboxing --yes \
     && opam update \
     && opam install depext --yes \
-    && OPAMJOBS=1 opam depext --install bap --yes \
+    && OPAMJOBS=1 opam depext --install bap.2.2.0 --yes \
     && OPAMJOBS=1 opam install yojson alcotest dune ppx_deriving_yojson --yes \
     && opam clean -acrs \
     # delete 6 GB (!!) of unnecessary data
